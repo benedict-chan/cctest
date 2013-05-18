@@ -26,8 +26,7 @@ namespace BenedictWebApi
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Database.DefaultConnectionFactory = new
-                   SqlCeConnectionFactory("System.Data.SqlServerCe.4.0");
+            Database.DefaultConnectionFactory = new SqlCeConnectionFactory("System.Data.SqlServerCe.4.0");
             Database.SetInitializer(new Models.BookingInitializer());
         }
     }

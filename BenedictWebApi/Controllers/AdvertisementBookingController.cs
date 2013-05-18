@@ -36,5 +36,11 @@ namespace BenedictWebApi.Controllers
             var newBooking = this._repo.Add(item);
             return newBooking;
         }
+
+        public HttpResponseMessage Delete(int id)
+        {
+            this._repo.Remove(id);
+            return new HttpResponseMessage(HttpStatusCode.NoContent);
+        }
     }
 }

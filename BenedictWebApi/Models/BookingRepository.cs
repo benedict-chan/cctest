@@ -17,12 +17,18 @@ namespace BenedictWebApi.Models
 
         public Booking Add(Booking newBooking)
         {
-            throw new NotImplementedException();
+            db.Bookings.Add(newBooking);
+            db.SaveChanges();
+            return newBooking;
+            //throw new NotImplementedException();
         }
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            var booking = db.Bookings.Find(id);
+            db.Bookings.Remove(booking);
+            db.SaveChanges();
+            //throw new NotImplementedException();
         }
     }
 }
