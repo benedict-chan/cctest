@@ -7,9 +7,12 @@ namespace BenedictWebApi.Models
 {
     public class BookingRepository : IBookingRepository
     {
+        private BookingDb db = new BookingDb();
+
         public Booking Get(int id)
         {
-            throw new NotImplementedException();
+            return db.Bookings.FirstOrDefault(s => s.Id == id);
+            //throw new NotImplementedException();
         }
 
         public Booking Add(Booking newBooking)

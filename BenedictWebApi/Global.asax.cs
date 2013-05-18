@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlServerCe;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -22,6 +25,10 @@ namespace BenedictWebApi
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            Database.DefaultConnectionFactory = new
+                   SqlCeConnectionFactory("System.Data.SqlServerCe.4.0");
+            Database.SetInitializer(new Models.BookingInitializer());
         }
     }
 }
