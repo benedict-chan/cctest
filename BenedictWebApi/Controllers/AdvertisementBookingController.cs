@@ -23,14 +23,18 @@ namespace BenedictWebApi.Controllers
             return this._repo.Get(id);
         }
 
-        public HttpResponseMessage New(Booking item)
+        //public HttpResponseMessage Post(Booking item)
+        //{
+        //    var newBooking = this._repo.Add(item);
+        //    var response = Request.CreateResponse<Booking>(HttpStatusCode.Created, newBooking);
+        //    string uri = Url.Route(null, new { id = newBooking.Id });
+        //    response.Headers.Location = new Uri(Request.RequestUri, uri);
+        //    return response;
+        //}
+        public Booking Post(Booking item)
         {
             var newBooking = this._repo.Add(item);
-            var response = Request.CreateResponse<Booking>(HttpStatusCode.Created, newBooking);
-            string uri = Url.Route(null, new { id = newBooking.Id });
-            response.Headers.Location = new Uri(Request.RequestUri, uri);
-            return response;
+            return newBooking;
         }
-
     }
 }
