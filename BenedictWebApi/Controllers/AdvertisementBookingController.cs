@@ -18,6 +18,11 @@ namespace BenedictWebApi.Controllers
             this._repo = repo;
         }
 
+        public IEnumerable<Booking> Get()
+        {
+            return this._repo.GetAll();
+        }
+
         public Booking Get(int id)
         {
             return this._repo.Get(id);

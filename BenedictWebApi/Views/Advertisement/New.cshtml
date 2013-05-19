@@ -1,0 +1,193 @@
+﻿    <link href="~/Content/bootstrap-timepicker.min.css" rel="stylesheet" media="screen">
+    <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" media="screen">
+
+
+@model BenedictWebApi.Models.Booking
+
+@{
+    ViewBag.Title = "Tell the world, book your advertisement now";
+}
+
+@{ Html.EnableClientValidation(); }
+
+<div class="content-wrapper">
+    <div id="booking-div">
+
+
+
+    @using (Html.BeginForm("New", "Advertisement", FormMethod.Post, new { id = "booking-form", @class = "form-horizontal" }))
+{
+
+    <fieldset>
+        <legend>Book your Nine advertisement Now</legend>
+
+        <div class="control-group">
+            <label class="control-label" for="clientname">Company name</label>
+            <div class="controls">
+                @Html.EditorFor(model => model.ClientName, new { id="clientname" })
+                @Html.ValidationMessageFor(model => model.ClientName)
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="expected-on">Advertising on </label>
+            <div class="controls">
+
+                <div class="input-append date datepicker" data-date="@DateTime.Today.AddDays(1).ToString("dd-MM-yyyy")" data-date-format="dd-mm-yyyy">
+                    <input size="16" type="text" id="expected-on" value="@DateTime.Today.AddDays(1).ToString("dd-MM-yyyy")" readonly name="expectedon"><span class="add-on"><i class="icon-th"></i></span>
+                </div>
+
+                <div class="input-append bootstrap-timepicker">
+                    <input id="expected-at" type="text" class="input-small">
+                    <span class="add-on"><i class="icon-time"></i></span>
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+
+        <div class="control-group">
+            <label class="control-label" for="duration">Duration</label>
+            <div class="controls">
+                <select id="duration" name="duration">
+                    <option value="15">15 seconds</option>
+                    <option value="30">30 seconds</option>
+                    <option value="45">45 seconds</option>
+                    <option value="60"> 1 minute</option>
+                </select>
+
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+                <button id="submit" type="submit" class="btn btn-primary">Submit</button>
+                <span class="field-validation-error" id="loading-span"><span for="">Loading.....</span></span>
+            </div>
+        </div>
+
+    </fieldset>
+
+
+    }
+        </div>
+</div>
+
+<div class="content-wrapper">
+    <div id="success-div">
+    <form>
+        <fieldset>
+        <legend>Your advertisement has been booked</legend>
+
+        <div class="controls controls-row">
+            <label class="span2" for="s-clientname"><strong>Company name</strong></label>
+            <label class="span3" id="s-clientname"></label>
+        </div>
+        <div class="controls controls-row">
+            <label class="span2" for="s-expectedon"><strong>Advertising on</strong></label>
+            <label class="span3" id="s-expectedon"></label>
+        </div>
+        <div class="controls controls-row">
+            <label class="span2" for="s-duration"><strong>Duration</strong></label>
+            <label class="span3" id="s-duration"></label>
+        </div>
+
+        <div class="control-group">
+            <div class="controls">
+                @Html.ActionLink("Book another one!", "New", null, new{@class="btn btn-primary"})
+            </div>
+        </div>
+
+        </fieldset>
+    </form>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/scripts/bootstrap-datepicker.js")
+    @Scripts.Render("~/scripts/bootstrap-timepicker.min.js")
+    @Scripts.Render("~/scripts/moment.min.js")
+
+
+
+
+
+<script type="text/javascript">
+
+         $(document).ready(new function () {
+             $('.datepicker').datepicker({
+                 format: 'dd-mm-yyyy',
+                 startDate: moment().add('days', 1).toDate(),
+                 todayHighlight: true
+             });
+
+             $('#expected-at').timepicker({
+                 showMeridian: false,
+                 minuteStep: 1
+             });
+
+
+             $('#submit').click(function () {
+
+                 
+                 var isValid = $('#booking-form').validate().form();
+                 if (!isValid) return false;
+
+                 var formMap = {};
+                 $.each($('#booking-form').serializeArray(), function (i, o) {
+                     formMap[o.name] = o.value;
+                 });
+                 console.info(formMap);
+
+                 //The data('datepicker') is found from the plugin-script, to get the datepicker object so can get the inner function of getDate
+                 var dateOn = $('#expected-on').parent().data('datepicker').getDate();
+                 var expectedDate = new Date(dateOn.getFullYear(), dateOn.getMonth(), dateOn.getDate());
+                 expectedDate.setHours(formMap.hour, formMap.minute, 0, 0);
+
+
+                 //Prepare the duration
+                 var duration = parseInt($('#duration').val());
+                 //console.info(duration);
+
+                 //Prepare the data to post
+                 var postData = {}; 
+                 postData['ExpectedDate'] = moment(expectedDate).format("YYYY-MM-DDTHH:mm:ss");
+                 postData['Duration'] = duration;
+                 postData['ClientName'] = formMap.ClientName;
+
+
+                 $.ajax({
+                     url: "../../api/advertisementbooking",
+                     type: "POST",
+                     data: JSON.stringify(postData),
+                     contentType: 'application/json; charset=utf-8',
+                     beforeSend: function () {
+                         $('#loading-span').toggle();
+                     },
+                     success: function (data) {
+                         $('#s-clientname').text(data.ClientName);
+                         $('#s-expectedon').text(moment(data.ExpectedDate).format("DD-MM-YYYY HH:mm"));
+                         $('#s-duration').text(data.Duration);
+                         $('#booking-div').hide(2000);
+                         $('#success-div').show(2000);
+                     },
+                     error: function (xhr, ajaxOptions, thrownError) {
+                         alert('Errors occurs, please try again later');
+                     }
+                 }).always(function () { $('#loading-span').hide(); });
+
+
+                 return false;
+             });
+
+         });
+</script> 
+
+}
+
+
+

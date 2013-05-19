@@ -9,6 +9,11 @@ namespace BenedictWebApi.Models
     {
         private BookingDb db = new BookingDb();
 
+        public IEnumerable<Booking> GetAll()
+        {
+            return db.Bookings;
+        }
+
         public Booking Get(int id)
         {
             return db.Bookings.FirstOrDefault(s => s.Id == id);

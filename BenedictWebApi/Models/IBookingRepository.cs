@@ -8,6 +8,7 @@ namespace BenedictWebApi.Models
 {
     public interface IBookingRepository
     {
+        IEnumerable<Booking> GetAll();
         Booking Get(int id);
         Booking Add(Booking newBooking);
         void Remove(int id);

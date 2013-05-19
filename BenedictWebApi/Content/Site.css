@@ -1,12 +1,12 @@
 ﻿html {
-    background-color: #e2e2e2;
+    /*background-color: #e2e2e2;*/
     margin: 0;
     padding: 0;
 }
 
 body {
     background-color: #fff;
-    border-top: solid 10px #000;
+    /*border-top: solid 10px #000;*/
     color: #333;
     font-size: .85em;
     font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
@@ -24,7 +24,7 @@ a {
 
     a:link, a:visited,
     a:active, a:hover {
-        color: #333;
+        /*color: #333;*/
     }
 
     a:hover {
@@ -34,6 +34,10 @@ a {
 header, footer, hgroup,
 nav, section {
     display: block;
+}
+
+header {
+    margin: 30px 0;
 }
 
 mark {
@@ -402,7 +406,7 @@ fieldset {
 }
 
     fieldset legend {
-        display: none;
+        /*display: none;*/
     }
 
     fieldset ol {
@@ -753,4 +757,12 @@ tr.pager td {
         footer p {
             margin: 0;
         }
+}
+
+#loading-span {
+    display:none;
+}
+
+#success-div {
+    display:none;
 }
