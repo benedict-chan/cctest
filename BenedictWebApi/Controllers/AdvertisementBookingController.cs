@@ -21,15 +21,15 @@ namespace BenedictWebApi.Controllers
             this._repo = repo;
         }
 
-        //public IEnumerable<Booking> Get()
-        //{
-        //    return this._repo.GetAll();
-        //}
+        public IEnumerable<Booking> Get()
+        {
+            return this._repo.GetAll();
+        }
 
-        //public Booking Get(int id)
-        //{
-        //    return this._repo.Get(id);
-        //}
+        public Booking Get(int id)
+        {
+            return this._repo.Get(id);
+        }
 
         public Booking Post(Booking item)
         {
@@ -37,10 +37,10 @@ namespace BenedictWebApi.Controllers
             return newBooking;
         }
 
-        //public HttpResponseMessage Delete(int id)
-        //{
-        //    this._repo.Remove(id);
-        //    return new HttpResponseMessage(HttpStatusCode.NoContent);
-        //}
+        public HttpResponseMessage Delete(int id)
+        {
+            this._repo.Remove(id);
+            return new HttpResponseMessage(HttpStatusCode.NoContent);
+        }
     }
 }
