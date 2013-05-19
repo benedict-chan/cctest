@@ -7,11 +7,15 @@ using System.Web;
 
 namespace BenedictWebApi.Models
 {
+    /// <summary>
+    /// Model for the Booking
+    /// </summary>
     public class Booking
     {
         public int Id { get; set; }
 
-        [Display(Name = "Your Name", Prompt = "Booking Name")]
+        [Display(Name = "Booking Name", Prompt = "Booking Name")]
+        //This is mainly for the Client side validation
         [Required(ErrorMessage = "Please enter your name")]
         public string ClientName { get; set; }
 

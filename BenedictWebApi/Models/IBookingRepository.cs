@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace BenedictWebApi.Models
 {
+    /// <summary>
+    /// Interface for BookingRepository
+    /// </summary>
     public interface IBookingRepository
     {
         IEnumerable<Booking> GetAll();

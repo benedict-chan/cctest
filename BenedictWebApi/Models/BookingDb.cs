@@ -7,13 +7,13 @@ using System.Web;
 
 namespace BenedictWebApi.Models
 {
+    /// <summary>
+    /// CodeFirst DbContext
+    /// </summary>
     public class BookingDb : DbContext
     {
         public DbSet<Booking> Bookings { get; set; }
 
-        //public static BookingDb()
-        //{
-        //    Database.SetInitializer
-        //}
+
     }
 }

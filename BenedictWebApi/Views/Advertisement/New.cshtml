@@ -133,49 +133,54 @@
 
              $('#submit').click(function () {
 
-                 
+                 //This is to custom call the ASP.Net MVC DataAnnotations validation
                  var isValid = $('#booking-form').validate().form();
                  if (!isValid) return false;
 
+                 //Create a forMap to help us get form data easily
                  var formMap = {};
                  $.each($('#booking-form').serializeArray(), function (i, o) {
                      formMap[o.name] = o.value;
                  });
-                 console.info(formMap);
 
-                 //The data('datepicker') is found from the plugin-script, to get the datepicker object so can get the inner function of getDate
+                 //The data('datepicker') is found from the plugin-script of bootstrap-datepicker
+                 //Which is used to get the datepicker object and allow us to call the inner function of getDate
                  var dateOn = $('#expected-on').parent().data('datepicker').getDate();
+
+                 //Get the expected booking date from both the date and time picker
                  var expectedDate = new Date(dateOn.getFullYear(), dateOn.getMonth(), dateOn.getDate());
                  expectedDate.setHours(formMap.hour, formMap.minute, 0, 0);
 
-
                  //Prepare the duration
                  var duration = parseInt($('#duration').val());
-                 //console.info(duration);
 
-                 //Prepare the data to post
+                 //Prepare the data to post back to asp.net web api, note the date format, we use moment.js to help us format it
                  var postData = {}; 
                  postData['ExpectedDate'] = moment(expectedDate).format("YYYY-MM-DDTHH:mm:ss");
                  postData['Duration'] = duration;
                  postData['ClientName'] = formMap.ClientName;
 
-
+                 //make the ajax post
                  $.ajax({
                      url: "../../api/advertisementbooking",
                      type: "POST",
                      data: JSON.stringify(postData),
                      contentType: 'application/json; charset=utf-8',
                      beforeSend: function () {
+                         //Show loading text
                          $('#loading-span').toggle();
                      },
                      success: function (data) {
+                         //Fill in the response data
                          $('#s-clientname').text(data.ClientName);
                          $('#s-expectedon').text(moment(data.ExpectedDate).format("DD-MM-YYYY HH:mm"));
                          $('#s-duration').text(data.Duration);
+                         //Make some delay here just to show the effect
                          $('#booking-div').hide(2000);
                          $('#success-div').show(2000);
                      },
                      error: function (xhr, ajaxOptions, thrownError) {
+                         //TO-DO, make this prettier
                          alert('Errors occurs, please try again later');
                      }
                  }).always(function () { $('#loading-span').hide(); });

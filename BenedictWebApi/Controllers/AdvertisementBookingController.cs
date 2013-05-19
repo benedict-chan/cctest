@@ -9,6 +9,9 @@ using BenedictWebApi.Models;
 
 namespace BenedictWebApi.Controllers
 {
+    /// <summary>
+    /// The Web Api Controller, as requested only have one method to expose, others are commented at the moment
+    /// </summary>
     public class AdvertisementBookingController : ApiController
     {
         private readonly IBookingRepository _repo;
@@ -18,34 +21,26 @@ namespace BenedictWebApi.Controllers
             this._repo = repo;
         }
 
-        public IEnumerable<Booking> Get()
-        {
-            return this._repo.GetAll();
-        }
-
-        public Booking Get(int id)
-        {
-            return this._repo.Get(id);
-        }
-
-        //public HttpResponseMessage Post(Booking item)
+        //public IEnumerable<Booking> Get()
         //{
-        //    var newBooking = this._repo.Add(item);
-        //    var response = Request.CreateResponse<Booking>(HttpStatusCode.Created, newBooking);
-        //    string uri = Url.Route(null, new { id = newBooking.Id });
-        //    response.Headers.Location = new Uri(Request.RequestUri, uri);
-        //    return response;
+        //    return this._repo.GetAll();
         //}
+
+        //public Booking Get(int id)
+        //{
+        //    return this._repo.Get(id);
+        //}
+
         public Booking Post(Booking item)
         {
             var newBooking = this._repo.Add(item);
             return newBooking;
         }
 
-        public HttpResponseMessage Delete(int id)
-        {
-            this._repo.Remove(id);
-            return new HttpResponseMessage(HttpStatusCode.NoContent);
-        }
+        //public HttpResponseMessage Delete(int id)
+        //{
+        //    this._repo.Remove(id);
+        //    return new HttpResponseMessage(HttpStatusCode.NoContent);
+        //}
     }
 }

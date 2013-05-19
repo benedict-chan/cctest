@@ -6,13 +6,16 @@ using System.Web;
 
 namespace BenedictWebApi.Models
 {
-    public class BookingInitializer : DropCreateDatabaseAlways<BookingDb> //DropCreateDatabaseIfModelChanges<BookingDb>
+    /// <summary>
+    /// CodeFirst Initializer for the BookingDb
+    /// </summary>
+    public class BookingInitializer : DropCreateDatabaseIfModelChanges<BookingDb>//DropCreateDatabaseAlways<BookingDb> //
     {
         protected override void Seed(BookingDb context)
         {
             base.Seed(context);
 
-            context.Bookings.Add(new Booking() { ExpectedDate = DateTime.Now, Duration = 30, ClientName = "Benedict" });
+            //context.Bookings.Add(new Booking() { ExpectedDate = DateTime.Now, Duration = 30, ClientName = "Benedict" });
 
         }
     }

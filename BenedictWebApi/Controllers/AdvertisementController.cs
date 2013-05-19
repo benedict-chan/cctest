@@ -6,6 +6,9 @@ using System.Web.Mvc;
 
 namespace BenedictWebApi.Controllers
 {
+    /// <summary>
+    /// Just use as a simple MVC 4 page
+    /// </summary>
     public class AdvertisementController : Controller
     {
         //

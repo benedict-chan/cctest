@@ -5,6 +5,9 @@ using System.Web;
 
 namespace BenedictWebApi.Models
 {
+    /// <summary>
+    /// a Simple Booking Repository 
+    /// </summary>
     public class BookingRepository : IBookingRepository
     {
         private BookingDb db = new BookingDb();
@@ -17,7 +20,6 @@ namespace BenedictWebApi.Models
         public Booking Get(int id)
         {
             return db.Bookings.FirstOrDefault(s => s.Id == id);
-            //throw new NotImplementedException();
         }
 
         public Booking Add(Booking newBooking)
@@ -25,7 +27,6 @@ namespace BenedictWebApi.Models
             db.Bookings.Add(newBooking);
             db.SaveChanges();
             return newBooking;
-            //throw new NotImplementedException();
         }
 
         public void Remove(int id)
@@ -33,7 +34,6 @@ namespace BenedictWebApi.Models
             var booking = db.Bookings.Find(id);
             db.Bookings.Remove(booking);
             db.SaveChanges();
-            //throw new NotImplementedException();
         }
     }
 }

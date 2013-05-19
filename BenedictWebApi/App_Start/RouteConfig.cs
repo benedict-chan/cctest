@@ -13,6 +13,7 @@ namespace BenedictWebApi
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //Changed the default controller to Advertisement instead of Home
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
