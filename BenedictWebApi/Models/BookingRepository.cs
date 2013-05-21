@@ -24,9 +24,16 @@ namespace BenedictWebApi.Models
 
         public Booking Add(Booking newBooking)
         {
-            db.Bookings.Add(newBooking);
-            db.SaveChanges();
-            return newBooking;
+            try
+            {
+                db.Bookings.Add(newBooking);
+                db.SaveChanges();
+                return newBooking;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public void Remove(int id)

@@ -16,17 +16,35 @@ namespace BenedictWebApi.Tests.Controllers
         [TestMethod]
         public void PostBooking()
         {
+            var testBooking = new Booking() { Id = 8, ClientName = "Benedict Mock", Duration = 30, ExpectedDate = DateTime.Now };
             //Setting up the mock
             var mock = new Mock<IBookingRepository>();
-            mock.Setup(b => b.Add(It.IsAny<Booking>())).Returns(new Booking() { Id = 8, ClientName = "Benedict Mock", Duration = 30, ExpectedDate = DateTime.Now });
+            mock.Setup(b => b.Add(It.IsAny<Booking>())).Returns(testBooking);
             var repo = mock.Object;
 
             //Inject the mocked repository into controller
             AdvertisementBookingController controller = new AdvertisementBookingController(repo);
-            var response = controller.Post(new Booking() { Id = 7, ClientName = "Benedict Test", Duration = 30, ExpectedDate = DateTime.Now });
+            var response = controller.Post(testBooking);
 
             // Assert
-            Assert.AreEqual(8, response.Id);
+            Assert.AreEqual(testBooking.Id, response.Id);
+        }
+
+        [TestMethod]
+        public void PostErrorBooking()
+        {
+            var testBooking = new Booking() { Id = 8, ClientName = "Benedict Mock", Duration = 30, ExpectedDate = DateTime.Now };
+            //Setting up the mock
+            var mock = new Mock<IBookingRepository>();
+            mock.Setup(b => b.Add(It.IsAny<Booking>())).Returns((Booking)null);
+            var repo = mock.Object;
+
+            //Inject the mocked repository into controller
+            AdvertisementBookingController controller = new AdvertisementBookingController(repo);
+            var response = controller.Post(testBooking);
+
+            // Assert
+            Assert.IsNull(response);
         }
     }
 }
